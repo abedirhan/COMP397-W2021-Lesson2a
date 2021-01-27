@@ -5,8 +5,10 @@ using UnityEngine;
 public class PlayerBehaviour : MonoBehaviour
 {
     public float movementForce;
-
+    public float jumpForce;
     public Rigidbody rigidbody;
+    public bool isGrounded;
+
     // public CharacterController controller;
 
     // public float maxSpeed = 10.0f;
@@ -31,29 +33,38 @@ public class PlayerBehaviour : MonoBehaviour
 
     void Update()
     {
-        if (Input.GetAxisRaw("Horizontal")>0)
+        if (isGrounded)
         {
-            //Move right
-           rigidbody.AddForce(Vector3.right*movementForce);
-        }
-        if (Input.GetAxisRaw("Horizontal") < 0)
-        {
-            //Move left
-            rigidbody.AddForce(Vector3.left * movementForce);
+            if (Input.GetAxisRaw("Horizontal") > 0)
+            {
+                //Move right
+                rigidbody.AddForce(Vector3.right * movementForce);
+            }
+            if (Input.GetAxisRaw("Horizontal") < 0)
+            {
+                //Move left
+                rigidbody.AddForce(Vector3.left * movementForce);
 
 
-        }
-        if (Input.GetAxisRaw("Vertical") > 0)
-        {
-            //Move forward
-            rigidbody.AddForce(Vector3.forward * movementForce);
-        }
-        if (Input.GetAxisRaw("Vertical") < 0)
-        {
-            //Move back
-            rigidbody.AddForce(Vector3.back * movementForce);
-        }
+            }
+            if (Input.GetAxisRaw("Vertical") > 0)
+            {
+                //Move forward
+                rigidbody.AddForce(Vector3.forward * movementForce);
+            }
+            if (Input.GetAxisRaw("Vertical") < 0)
+            {
+                //Move back
+                rigidbody.AddForce(Vector3.back * movementForce);
+            }
 
+            if (Input.GetAxisRaw("Jump")>0)
+            {
+               //Jump
+               rigidbody.AddForce(Vector3.up*jumpForce);
+            }
+        }   
+        
         // isGrounded = Physics.CheckSphere(groundCheck.position, groundRadius, groundMask);
         //
         // if (isGrounded && velocity.y < 0)
@@ -77,11 +88,33 @@ public class PlayerBehaviour : MonoBehaviour
         //
         // controller.Move(velocity * Time.deltaTime);
     }
-
+    
     void OnDrawGizmos()
     {
         // Gizmos.color = Color.white;
         // Gizmos.DrawWireSphere(groundCheck.position, groundRadius);
     }
 
+    void OnCollisionEnter(Collision other)
+    {
+        if (other.gameObject.CompareTag("Ground"))
+        {
+            isGrounded = true;
+        }
+    }
+
+    void OnCollisionStay(Collision other)
+    {
+        if (other.gameObject.CompareTag("Ground"))
+        {
+            isGrounded = true;
+        }
+    }
+    void OnCollisionExit(Collision other)
+    {
+        if (other.gameObject.CompareTag("Ground"))
+        {
+            isGrounded = false;
+        }
+    }
 }

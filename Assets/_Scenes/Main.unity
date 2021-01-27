@@ -409,7 +409,9 @@ MonoBehaviour:
   m_Name: 
   m_EditorClassIdentifier: 
   movementForce: 5
+  jumpForce: 0
   rigidbody: {fileID: 1052364183}
+  isGrounded: 0
 --- !u!54 &1052364183
 Rigidbody:
   m_ObjectHideFlags: 0
@@ -452,7 +454,7 @@ MeshCollider:
   m_PrefabInstance: {fileID: 0}
   m_PrefabAsset: {fileID: 0}
   m_GameObject: {fileID: 1677162881}
-  m_Material: {fileID: 0}
+  m_Material: {fileID: 13400000, guid: 4e0674a6de49a3645a8639c14c78fbad, type: 2}
   m_IsTrigger: 0
   m_Enabled: 1
   serializedVersion: 4
